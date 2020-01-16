@@ -45,7 +45,6 @@ function pixelateImage(name, imageName, maxWidth, maxHeight)
 		// LAUNCH HERE AFTER LOAD
 
 		projectName.scenePropertiesSetup(colorArray.length * colorArray[0].length, colorArray.length)
-		// console.log(transposeMatrix(colorArray))
 		transposeMatrix(colorArray).map(x => x.reverse())
 		projectName.sceneCreating(transposeMatrix(colorArray).map(x => x.reverse()))
 
@@ -53,8 +52,8 @@ function pixelateImage(name, imageName, maxWidth, maxHeight)
 	// clear canvas ?
 }
 
-pixelateImage('joconde', 'joconde.jpeg', 10, 10)
-// pixelateImage('liberty', 'liberty.jpg', 30, 10)
+// pixelateImage('joconde', 'joconde.jpeg', 10, 10)
+pixelateImage('liberty', 'liberty.jpg', 30, 11)
 // pixelateImage('cri', 'cri.jpg', 10, 10)
 
 
@@ -118,7 +117,7 @@ Render.run(render)
 let projectName =
 {
     // Scene properties
-    boxSize : 50,
+    boxSize : 40,
     numberOfBox : 50,
     boxByColumn : 10,
     boxes : [],
@@ -135,7 +134,6 @@ let projectName =
     
     sceneCreating(colorArray)
     {
-		console.log(colorArray)
 		let _tab = []
 		let _color
         for (let i = 0; i < this.numberOfBox; i++) {
@@ -145,8 +143,7 @@ let projectName =
 				_tab = []
 				this.xGap += this.boxSize
 			}
-			_color = colorArray[this.boxes.length][i - parseInt(`${this.boxes.length}${0}`)]
-			console.log(_color)
+			_color = colorArray[this.boxes.length][i - this.boxByColumn * this.boxes.length]
             _tab.push(Bodies.rectangle(context.canvasWidth / 2 - this.numberOfBox / this.boxByColumn * this.boxSize / 2 + this.xGap, -100, this.boxSize, this.boxSize, {
 				render: {
 					fillStyle: `rgb(${_color.r}, ${_color.g}, ${_color.b})`,
@@ -154,7 +151,6 @@ let projectName =
 			   }
 			}))
 		}
-		console.log(this.boxes)
 		this.boxesShuffleAndDisplay(this.boxes)
 	},
 	
@@ -169,7 +165,6 @@ let projectName =
 		}
 
 		let shuffleBoxes = shuffle(boxes)
-		console.log(shuffleBoxes)
 
 		let _columnCounter = 0
 		function lauchBoxesDisplay(shuffleBoxes)
