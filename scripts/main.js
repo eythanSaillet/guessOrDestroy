@@ -2,13 +2,13 @@
 paper.install(window)
 paper.setup()
 
-function pixelateImage(name, imageName, maxWidth, maxHeight, tableContainer)
+function pixelateImage(name, imageName, maxWidth, maxHeight)
 {
 
 	let raster = new Raster(`assets/${imageName}`)
 
-	raster.on('load', function() {
-
+	raster.on('load', function()
+	{
 		// MAKE THE IMAGE AS SMALL AS AT LEAST ONE OF THE MAXIMUM LENGTH
 		let width = raster.size._width
 		let height = raster.size._height
@@ -26,9 +26,11 @@ function pixelateImage(name, imageName, maxWidth, maxHeight, tableContainer)
 
 		// COLOR DATA ARRAY CREATION
 		let colorArray = []
-		for (let y = 0; y < raster.height; y++) {
+		for (let y = 0; y < raster.height; y++)
+		{
 			let array = []
-			for(let x = 0; x < raster.width; x++) {
+			for(let x = 0; x < raster.width; x++)
+			{
 
 				let rasterColor = raster.getPixel(x, y)
 				let color = {}
@@ -39,48 +41,21 @@ function pixelateImage(name, imageName, maxWidth, maxHeight, tableContainer)
 			}
 			colorArray.push(array)
 		}
-		// console.log(colorArray)
-		// return colorArray
 
+		// LAUNCH HERE AFTER LOAD
 
-		// *** // exp
-
-
-		// ARRAY CREATION
-		table = document.createElement('table')
-		table.classList.add(name)
-		tableContainer.appendChild(table)
-		for (let i = 0; i < height; i++) {
-			const row = document.createElement('tr')
-			table.appendChild(row)
-			for (let j = 0; j < width; j++) {
-				const cell = document.createElement('td')
-				row.appendChild(cell)
-			}
-		}
-
-
-		// ARRAY PAINTING
-		let tableCells = document.querySelectorAll(`.${name} td`)
-		let counter = 0
-		for (let y = 0; y < raster.height; y++) {
-			for(let x = 0; x < raster.width; x++) {
-				tableCells[counter].style.background = `rgb(${colorArray[y][x].r}, ${colorArray[y][x].g}, ${colorArray[y][x].b})`
-				counter++
-			}
-		}
-
-
-		// *** // exp
+		projectName.scenePropertiesSetup(colorArray.length * colorArray[0].length, colorArray.length)
+		// console.log(transposeMatrix(colorArray))
+		transposeMatrix(colorArray).map(x => x.reverse())
+		projectName.sceneCreating(transposeMatrix(colorArray).map(x => x.reverse()))
 
 	})
-
 	// clear canvas ?
 }
 
-pixelateImage('joconde', 'joconde.jpeg', 10, 10, document.querySelector('.container'))
-pixelateImage('liberty', 'liberty.jpg', 20, 20, document.querySelector('.container'))
-pixelateImage('cri', 'cri.jpg', 10, 10, document.querySelector('.container'))
+pixelateImage('joconde', 'joconde.jpeg', 10, 10)
+// pixelateImage('liberty', 'liberty.jpg', 30, 10)
+// pixelateImage('cri', 'cri.jpg', 10, 10)
 
 
 // MATTER.JS
@@ -124,7 +99,7 @@ let render = Render.create({
         height: context.canvasHeight,
     },
 })
-console.log(render)
+render.options.wireframes = false
 
 
 // bounds
@@ -142,7 +117,7 @@ Render.run(render)
 
 let projectName =
 {
-    // Scene 
+    // Scene properties
     boxSize : 50,
     numberOfBox : 50,
     boxByColumn : 10,
@@ -151,18 +126,33 @@ let projectName =
 	yGap : 0,
 	boxesDisplayCounter : 0,
 
+	scenePropertiesSetup(numberOfBox, boxByColumn)
+	{
+		this.numberOfBox = numberOfBox
+		this.boxByColumn = boxByColumn
+	},
+
     
-    sceneCreating()
+    sceneCreating(colorArray)
     {
-		let tab = []
-        for (let i = 0; i < this.numberOfBox + 1; i++) {
+		console.log(colorArray)
+		let _tab = []
+		let _color
+        for (let i = 0; i < this.numberOfBox; i++) {
             if(i % this.boxByColumn == 0 && i != 0)
             {
-				this.boxes.push(tab)
-				tab = []
+				this.boxes.push(_tab)
+				_tab = []
 				this.xGap += this.boxSize
 			}
-            tab.push(Bodies.rectangle(context.canvasWidth / 2 - this.numberOfBox / this.boxByColumn * this.boxSize / 2 + this.xGap, -100, this.boxSize, this.boxSize))
+			_color = colorArray[this.boxes.length][i - parseInt(`${this.boxes.length}${0}`)]
+			console.log(_color)
+            _tab.push(Bodies.rectangle(context.canvasWidth / 2 - this.numberOfBox / this.boxByColumn * this.boxSize / 2 + this.xGap, -100, this.boxSize, this.boxSize, {
+				render: {
+					fillStyle: `rgb(${_color.r}, ${_color.g}, ${_color.b})`,
+					lineWidth: 2
+			   }
+			}))
 		}
 		console.log(this.boxes)
 		this.boxesShuffleAndDisplay(this.boxes)
@@ -208,13 +198,17 @@ let projectName =
 					{
 						boxesDisplayLoop(boxesColumn)
 					}
-				}, 300)
+				}, Math.floor(Math.random() * (1000 - 500 + 1)) + 500)
 			}
 			let _counter = 0
 			boxesDisplayLoop(boxesColumn)
 		}
 	},
 }
-projectName.sceneCreating()
 
-// Math.random() * context.canvasWidth
+// TOOLS FUNCTION
+
+function transposeMatrix(matrix)
+{
+	return matrix[0].map(function (_, c) { return matrix.map(function (r) { return r[c] }) })
+}
