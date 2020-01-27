@@ -52,9 +52,9 @@ function pixelateImage(name, imageName, maxWidth, maxHeight)
 	// clear canvas ?
 }
 
-// pixelateImage('joconde', 'joconde.jpeg', 10, 10)
+pixelateImage('joconde', 'joconde.jpeg', 10, 10)
 // pixelateImage('liberty', 'liberty.jpg', 30, 15)
-pixelateImage('cri', 'cri.jpg', 10, 10)
+// pixelateImage('cri', 'cri.jpg', 20, 20)
 
 
 // MATTER.JS
@@ -65,20 +65,20 @@ let context = {
     windowWidth : window.innerWidth,
     windowHeight : window.innerHeight,
 
-    canvasWindowPart : 1.2,
+    canvasWindowPart : 1.25,
 
-    resizeUpdate()
+    setResizeUpdate()
     {
-        this.canvasWidth = window.innerWidth / this.canvasWindowPart
+        this.canvasWidth = window.innerWidth
         this.canvasHeight = window.innerHeight / this.canvasWindowPart
         window.addEventListener('resize', () =>
         {
-            this.canvasWidth = window.innerWidth / this.canvasWindowPart
+            this.canvasWidth = window.innerWidth
             this.canvasHeight = window.innerHeight / this.canvasWindowPart
         })
-    }
+	}
 }
-context.resizeUpdate()
+context.setResizeUpdate()
 
 /// module aliases
 let Engine = Matter.Engine,
@@ -103,7 +103,7 @@ render.options.wireframes = false
 
 
 // bounds
-let ground = Bodies.rectangle(400, 610, 1500, 60, { isStatic: true })
+let ground = Bodies.rectangle(context.canvasWidth / 2, context.canvasHeight + 25, context.canvasWidth, 50, { isStatic: true })
 
 // add all of the bodies to the world
 World.add(engine.world, [ground])
@@ -118,7 +118,7 @@ Render.run(render)
 let projectName =
 {
     // Scene properties
-    boxSize : 30,
+    boxSize : 50,
     numberOfBox : 50,
     boxByColumn : 10,
     boxes : [],
@@ -130,10 +130,11 @@ let projectName =
 	{
 		this.numberOfBox = numberOfBox
 		this.boxByColumn = boxByColumn
+
 	},
 
     
-    sceneCreating(colorArray)
+	sceneCreating(colorArray)
     {
 		let _tab = []
 		let _color
@@ -153,6 +154,8 @@ let projectName =
 			}))
 		}
 		this.boxesShuffleAndDisplay(this.boxes)
+
+		this.setMouseConstraint()
 	},
 	
 	boxesShuffleAndDisplay(boxes)
@@ -200,31 +203,58 @@ let projectName =
 			boxesDisplayLoop(boxesColumn)
 		}
 	},
+
+	setMouseConstraint()
+	{
+		const mouse = Matter.Mouse.create(render.context.canvas)
+		const options = {mouse}
+		const mConstraint = Matter.MouseConstraint.create(engine, options)
+		World.add(world, mConstraint)
+	},
 }
 
-// TOOLS FUNCTION
+// Tools functions
 
 function transposeMatrix(matrix)
 {
 	return matrix[0].map(function (_, c) { return matrix.map(function (r) { return r[c] }) })
 }
 
-setTimeout( () => {
+// Answer input & win test
 
-	const canvas = render.context.canvas
-	const mouse = Matter.Mouse.create(canvas)
-	const options = {
-		mouse
+let answerInput = {
+	
+	textInput : '',
+	$textInput : document.querySelector('.inputContainer span'),
+	allowedLetters : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', 'Enter', 'Backspace'],
+
+	init()
+	{
+		this.setKeyboardEvent()
+	},
+
+	setKeyboardEvent()
+	{
+		window.addEventListener('keydown', (_event) =>
+		{
+			if(this.allowedLetters.indexOf(_event.key) != -1)
+			{
+				if (_event.key == 'Enter')
+				{
+					// TEST WIN
+					console.log('test win')
+				}
+				else if(_event.key == 'Backspace')
+				{
+					this.textInput = this.textInput.slice(0, this.textInput.length - 1)
+				}
+				else
+				{
+					this.textInput += _event.key
+				}
+				this.$textInput.innerHTML = this.textInput
+			}
+		})
 	}
-
-	console.log(render.context.canvas)
-
-	console.log(canvas)
-	console.log(mouse)
-	console.log(options)
-
-	let mConstraint = Matter.MouseConstraint.create(engine, options)
-	console.log(mConstraint)
-	World.add(world, mConstraint)
 }
-, 500)
+answerInput.init()
