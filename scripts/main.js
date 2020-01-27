@@ -53,8 +53,8 @@ function pixelateImage(name, imageName, maxWidth, maxHeight)
 }
 
 // pixelateImage('joconde', 'joconde.jpeg', 10, 10)
-pixelateImage('liberty', 'liberty.jpg', 30, 11)
-// pixelateImage('cri', 'cri.jpg', 10, 10)
+// pixelateImage('liberty', 'liberty.jpg', 30, 15)
+pixelateImage('cri', 'cri.jpg', 10, 10)
 
 
 // MATTER.JS
@@ -88,6 +88,7 @@ Bodies = Matter.Bodies
 
 // create an engine
 let engine = Engine.create()
+let world = engine.world
 
 // create a renderer
 let render = Render.create({
@@ -117,7 +118,7 @@ Render.run(render)
 let projectName =
 {
     // Scene properties
-    boxSize : 40,
+    boxSize : 30,
     numberOfBox : 50,
     boxByColumn : 10,
     boxes : [],
@@ -207,3 +208,23 @@ function transposeMatrix(matrix)
 {
 	return matrix[0].map(function (_, c) { return matrix.map(function (r) { return r[c] }) })
 }
+
+setTimeout( () => {
+
+	const canvas = render.context.canvas
+	const mouse = Matter.Mouse.create(canvas)
+	const options = {
+		mouse
+	}
+
+	console.log(render.context.canvas)
+
+	console.log(canvas)
+	console.log(mouse)
+	console.log(options)
+
+	let mConstraint = Matter.MouseConstraint.create(engine, options)
+	console.log(mConstraint)
+	World.add(world, mConstraint)
+}
+, 500)
