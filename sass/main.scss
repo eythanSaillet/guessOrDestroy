@@ -4,15 +4,16 @@ body
 }
 .container
 {   
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
     .canvasContainer
     {
         display: flex;
         justify-content: center;
     }
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    overflow: hidden;
     .warningBar
     {
         width: 110vw;
@@ -23,8 +24,6 @@ body
     }
     .inputContainer
     {
-        min-height: 16vh;
-        max-height: 20vh;
         display: flex;
         justify-content: center;
         align-items: center;

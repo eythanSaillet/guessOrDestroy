@@ -5,7 +5,8 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: black;
-  overflow: hidden; }
+  display: flex;
+  flex-direction: column; }
   .container .canvasContainer {
     display: flex;
     justify-content: center; }
@@ -14,8 +15,6 @@ body {
     .container .warningBar img {
       margin: 0 0 0 -15px; }
   .container .inputContainer {
-    min-height: 16vh;
-    max-height: 20vh;
     display: flex;
     justify-content: center;
     align-items: center;
