@@ -1,6 +1,6 @@
 // DEFINE A RESPONSIVE CONTEXT TO CREATE MATTER CANVAS SCENE
 
-let context = {
+const context = {
 
 	canvasWindowPart : 0.75,
 
@@ -32,21 +32,23 @@ context.init()
 
 // MATTER.JS
 
-let Engine = Matter.Engine,
+const Engine = Matter.Engine,
 Render = Matter.Render,
 World = Matter.World,
-Bodies = Matter.Bodies
+Bodies = Matter.Bodies,
+Body = Matter.Body,
+Events = Matter.Events
 
 // CREATE ENGINE
-let engine = Engine.create()
-let world = engine.world
+const engine = Engine.create()
+const world = engine.world
 
 // console.log(engine.positionIterations, engine.velocityIterations)
 engine.positionIterations = 5
 engine.velocityIterations = 20
 
 // CREATE A RENDERER
-let render = Render.create({
+const render = Render.create({
 	element: document.querySelector('.canvasContainer'),
 	engine: engine,
 	options: {
@@ -59,7 +61,7 @@ let render = Render.create({
 context.setResizeUpdate()
 
 // GROUND
-let ground = Bodies.rectangle(context.canvasWidth / 2, context.canvasHeight + 25, context.canvasWidth, 50, { isStatic: true })
+const ground = Bodies.rectangle(context.canvasWidth / 2, context.canvasHeight + 25, context.canvasWidth, 50, { isStatic: true })
 World.add(engine.world, [ground])
 
 // TO MAKE DETERNIMISMM
@@ -71,7 +73,7 @@ World.add(engine.world, [ground])
 Engine.run(engine)
 Render.run(render)
 
-let matterSystem =
+const matterSystem =
 {
 	// Scene properties
 	boxeSize : context.boxesSize,
@@ -82,6 +84,10 @@ let matterSystem =
 	yStep : 0,
 	boxesDisplayCounter : 0,
 	distanceFromRight : 150,
+
+	ground : null,
+	cleaningArm : null,
+	isCleaning : false,
 
 	systemPropertiesSetup(numberOfBox, boxByColumn)
 	{
@@ -112,6 +118,7 @@ let matterSystem =
 		this.boxesShuffleAndDisplay(this.boxes)
 
 		this.setMouseConstraint()
+		this.setCleaningSystem()
 	},
 	
 	boxesShuffleAndDisplay(boxes)
@@ -166,5 +173,35 @@ let matterSystem =
 		const options = {mouse}
 		const mConstraint = Matter.MouseConstraint.create(engine, options)
 		World.add(world, mConstraint)
+	},
+
+	setCleaningSystem()
+	{
+		// CREATING CLEANING ARM BODY
+		this.cleaningArm = Bodies.rectangle(-100, 0, 50, context.canvasHeight, { isStatic: true })
+		World.add(engine.world, [this.cleaningArm])
+
+		// CLEANING CLOCK ANIMATION
+		let cleaningArmPos = -100
+		Events.on(engine, 'beforeUpdate', () =>
+		{
+			// IF TRUE => CLEAN
+			if (this.isCleaning) {
+				Body.setVelocity(this.cleaningArm, { x: 15, y: 0 })
+				Body.setPosition(this.cleaningArm, { x: cleaningArmPos, y: context.canvasHeight / 2})
+				cleaningArmPos += 5
+			}
+			// RESET CLEANING SYSTEM
+			if (cleaningArmPos > context.canvasWidth) {
+				this.isCleaning = false
+				cleaningArmPos = -100
+				// REMOVING ALL BOXES FROM THE SCENE
+				for (const _array of this.boxes) {
+					for (const _element of _array) {
+						World.remove(engine.world, [_element])
+					}
+				}
+			}
+		})
 	},
 }

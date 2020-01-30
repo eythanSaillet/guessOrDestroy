@@ -18,8 +18,7 @@ body {
   .container .inputContainer {
     display: flex;
     justify-content: center;
-    align-items: center;
-    overflow: scroll; }
+    align-items: center; }
     .container .inputContainer span {
       color: white;
       font-family: 'Raleway', sans-serif;

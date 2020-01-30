@@ -35,7 +35,7 @@ let answerInput = {
 	
 	textInput : '',
 	$textInput : document.querySelector('.inputContainer span'),
-	allowedLetters : ['a', 'à', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'ù', 'v', 'w', 'x', 'y', 'z', ' ', 'Enter', 'Backspace'],
+	allowedLetters : ['a', 'à', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'ù', 'v', 'w', 'x', 'y', 'z', ' ', 'enter', 'backspace'],
 
 	init()
 	{
@@ -46,7 +46,7 @@ let answerInput = {
 	{
 		window.addEventListener('keydown', (_event) =>
 		{
-			if(this.allowedLetters.indexOf(_event.key) != -1)
+			if(this.allowedLetters.indexOf(_event.key.toLowerCase()) != -1)
 			{
 				if (_event.key == 'Enter')
 				{
