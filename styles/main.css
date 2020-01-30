@@ -6,7 +6,8 @@ body {
   height: 100vh;
   background-color: black;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  overflow: hidden; }
   .container .canvasContainer {
     display: flex;
     justify-content: center; }
@@ -18,7 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; }
+    overflow: scroll; }
     .container .inputContainer span {
       color: white;
       font-family: 'Raleway', sans-serif;

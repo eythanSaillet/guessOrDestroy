@@ -1,20 +1,20 @@
 [
-    {
-        "name":"La joconde",
-        "imageName":"joconde.jpeg",
-        "size":[10, 10],
-        "answers":["joconde", "mona", "lisa"]
-    },
-    {
-        "name":"La Liberté guidant le peuple",
-        "imageName":"liberty.jpg",
-        "size":[30, 15],
-        "answers":["liberté", "liberte", "guidant", "peuple"]
-    },
-    {
-        "name":"Le Cri",
-        "imageName":"cri.jpg",
-        "size":[10, 10],
-        "answers":["cri"]
-    }
+	{
+		"name":"La joconde",
+		"imageName":"joconde.jpeg",
+		"size":[10, 10],
+		"answers":["joconde", "mona", "lisa"]
+	},
+	{
+		"name":"La Liberté guidant le peuple",
+		"imageName":"liberty.jpg",
+		"size":[15, 15],
+		"answers":["liberté", "liberte", "guidant", "peuple"]
+	},
+	{
+		"name":"Le Cri",
+		"imageName":"cri.jpg",
+		"size":[10, 10],
+		"answers":["cri"]
+	}
 ]

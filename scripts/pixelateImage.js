@@ -45,7 +45,7 @@ function pixelateImage(imageName, maxWidth, maxHeight)
 		}
 
 		// COLORS ARRAY, NUMBER OF BOXES AND BOXES BY COLUMN => SEND TO => MATTER.JS
-		matterSystem.scenePropertiesSetup(colorArray.length * colorArray[0].length, colorArray.length)
+		matterSystem.systemPropertiesSetup(colorArray.length * colorArray[0].length, colorArray.length)
 		transposeMatrix(colorArray).map(x => x.reverse())
 		matterSystem.sceneCreating(transposeMatrix(colorArray).map(x => x.reverse()))
 

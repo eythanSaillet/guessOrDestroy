@@ -9,6 +9,7 @@ body
     background-color: black;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     .canvasContainer
     {
         display: flex;
@@ -27,7 +28,7 @@ body
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
+        overflow: scroll;
         span
         {
             color: white;

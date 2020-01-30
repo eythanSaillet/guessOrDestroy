@@ -1,29 +1,3 @@
-let context = {
-
-	// Window values
-	windowWidth : window.innerWidth,
-	windowHeight : window.innerHeight,
-
-	canvasHeight : null,
-	canvasWidth : null,
-
-	canvasWindowPart : 0.75,
-
-	setResizeUpdate()
-	{
-		this.canvasWidth = window.innerWidth
-		this.canvasHeight = window.innerHeight * this.canvasWindowPart
-		document.querySelector('.inputContainer').style.height = `${window.innerHeight - this.canvasHeight - document.querySelector('.warningBar').style.height}px`
-		window.addEventListener('resize', () =>
-		{
-			this.canvasWidth = window.innerWidth
-			this.canvasHeight = window.innerHeight * this.canvasWindowPart
-			document.querySelector('.inputContainer').style.height = `${window.innerHeight - this.canvasHeight - document.querySelector('.warningBar').style.height}px`
-		})
-	}
-}
-context.setResizeUpdate()
-
 let gameState = {
 
 	gameConfig : {},
