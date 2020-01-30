@@ -16,9 +16,9 @@ let render = Render.create({
     options: {
         width: context.canvasWidth,
         height: context.canvasHeight,
+        wireframes : false,
     },
 })
-render.options.wireframes = false
 
 // GROUND
 let ground = Bodies.rectangle(context.canvasWidth / 2, context.canvasHeight + 25, context.canvasWidth, 50, { isStatic: true })
@@ -31,13 +31,14 @@ Render.run(render)
 let matterSystem =
 {
     // Scene properties
-    boxSize : 40,
+    boxeSize : 40,
     numberOfBox : 50,
     boxByColumn : 10,
     boxes : [],
-    xGap : 0,
-	yGap : 0,
-	boxesDisplayCounter : 0,
+    xStep : 0,
+	yStep : 0,
+    boxesDisplayCounter : 0,
+    distanceFromRight : 150,
 
 	scenePropertiesSetup(numberOfBox, boxByColumn)
 	{
@@ -45,6 +46,7 @@ let matterSystem =
 		this.boxByColumn = boxByColumn
 
 	},
+
 
     
 	sceneCreating(colorArray)
@@ -56,14 +58,15 @@ let matterSystem =
             {
 				this.boxes.push(_tab)
 				_tab = []
-				this.xGap += this.boxSize
+				this.xStep += this.boxeSize
 			}
 			_color = colorArray[this.boxes.length][i - this.boxByColumn * this.boxes.length]
-            _tab.push(Bodies.rectangle(context.canvasWidth / 2 - this.numberOfBox / this.boxByColumn * this.boxSize / 2 + this.xGap, -100, this.boxSize, this.boxSize, {
-				render: {
+            _tab.push(Bodies.rectangle(this.xStep + context.canvasWidth - this.numberOfBox / this.boxByColumn * this.boxeSize - this.distanceFromRight, -100, this.boxeSize, this.boxeSize, {
+                render:
+                {
 					fillStyle: `rgb(${_color.r}, ${_color.g}, ${_color.b})`,
 					lineWidth: 2
-			   }
+			    }
 			}))
 		}
 		this.boxesShuffleAndDisplay(this.boxes)
