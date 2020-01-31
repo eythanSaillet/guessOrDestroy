@@ -35,7 +35,7 @@ let answerInput = {
 	
 	textInput : '',
 	$textInput : document.querySelector('.inputContainer span'),
-	allowedLetters : ['a', 'à', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'ù', 'v', 'w', 'x', 'y', 'z', ' ', 'enter', 'backspace'],
+	allowedLetters : ['a', 'à', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'ù', 'v', 'w', 'x', 'y', 'z', ' ','\'', 'enter', 'backspace'],
 
 	init()
 	{
@@ -50,8 +50,9 @@ let answerInput = {
 			{
 				if (_event.key == 'Enter')
 				{
-					// TEST WIN
-					console.log('test win')
+					// WIN TEST
+					this.winTest(this.textInput)
+					this.textInput = ''
 				}
 				else if(_event.key == 'Backspace')
 				{
@@ -64,6 +65,29 @@ let answerInput = {
 				this.$textInput.innerHTML = this.textInput
 			}
 		})
+	},
+
+	winTest(input)
+	{
+		// SPLIT THE ANSWER INTO SPERATE WORDS
+		const _words = input.split(' ')
+		let goodAnswerCounter = 0
+
+		// TEST IF EACH WORD CORRESPOND TO EACH GOOD ANSWER
+		for (const _word of _words) {
+			for (const _goodAnswer of gameState.gameConfig[gameState.actualImage].answers) {
+				if (_word == _goodAnswer) {
+					goodAnswerCounter++
+				}
+			}
+		}
+		if (goodAnswerCounter > 0) {
+			console.log('WIN')
+			matterSystem.isCleaning = true
+		}
+		else{
+			console.log('LOSE')
+		}
 	}
 }
 answerInput.init()

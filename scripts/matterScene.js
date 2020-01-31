@@ -192,7 +192,7 @@ const matterSystem =
 				cleaningArmPos += 5
 			}
 			// RESET CLEANING SYSTEM
-			if (cleaningArmPos > context.canvasWidth) {
+			if (cleaningArmPos > context.canvasWidth + 100) {
 				this.isCleaning = false
 				cleaningArmPos = -100
 				// REMOVING ALL BOXES FROM THE SCENE
