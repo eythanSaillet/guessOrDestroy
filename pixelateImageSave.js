@@ -4,13 +4,10 @@
 paper.install(window)
 paper.setup()
 
-let unpixelizationSizes
-
 function pixelateImage(_imageName, _maxWidth, _maxHeight)
 {
 
 	let _raster = new Raster(`assets/gamePics/${_imageName}`)
-	unpixelizationSizes = []
 
 	_raster.on('load', function()
 	{
@@ -20,9 +17,8 @@ function pixelateImage(_imageName, _maxWidth, _maxHeight)
 
 		do
 		{
-			_width /= 1.1
 			_height /= 1.1
-			unpixelizationSizes.push([Math.ceil(_width), Math.ceil(_height)])
+			_width /= 1.1
 		} while (_width >= _maxWidth || _height >= _maxHeight)
 		
 		_width = Math.ceil(_width)
@@ -53,50 +49,6 @@ function pixelateImage(_imageName, _maxWidth, _maxHeight)
 		transposeMatrix(_colorArray).map(x => x.reverse())
 		matterSystem.sceneCreating(transposeMatrix(_colorArray).map(x => x.reverse()))
 
-		// console.log(unpixelizationSizes)
-		// unpixelizationSetup(unpixelizationSizes, _imageName)
-
 	})
 	// clear canvas ?
-}
-
-function unpixelizationSetup(_sizesArray, _imageName)
-{
-
-	let _numberOfUnpixelisationStates = 10
-	let _sizesArrayStep = _sizesArray.length / _numberOfUnpixelisationStates
-	let _sizesArrayCounter = 0
-	let _newSizesArray = []
-
-	do {
-		
-		_newSizesArray.push(_sizesArray[Math.floor(_sizesArrayCounter)])
-		_sizesArrayCounter += _sizesArrayStep
-	} while (_sizesArrayCounter < _sizesArray.length)
-	console.log(_newSizesArray)
-
-	let _unpixelizationStates = []
-	for (const _element of _newSizesArray) {
-		let _raster = new Raster(`assets/gamePics/${_imageName}`)
-		_raster.size = new Size(_element[0], _element[1])
-
-		// COLOR DATA ARRAY CREATION
-		let _colorArray = []
-		for (let y = 0; y < _raster.height; y++)
-		{
-			let _array = []
-			for(let x = 0; x < _raster.width; x++)
-			{
-				let _rasterColor = _raster.getPixel(x, y)
-				let _color = {}
-				_color.r = _rasterColor.components[0] * 255
-				_color.g = _rasterColor.components[1] * 255
-				_color.b = _rasterColor.components[2] * 255
-				_array.push(_color)
-			}
-			_colorArray.push(_array)
-		}
-		_unpixelizationStates.push(_colorArray)
-	}
-	console.log(_unpixelizationStates)
 }

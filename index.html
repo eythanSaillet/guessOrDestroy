@@ -5,21 +5,50 @@
     <title>Guess or DESTROY</title>
     <meta name="description" content="Guess what picture it is, or DESTROY it !">
     <link href="https://fonts.googleapis.com/css?family=Raleway:800|Roboto+Mono:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
     <div class="container">
-      <div class="canvasContainer"></div>
-      <div class="warningBar">
-        <img src="assets/warningBar.svg">
+      <div class="giveUpContainer">
+        <div class="giveUpText">
+          <p>Jette ce cube pour</p>
+          <p>donner ta langue au chat</p>
+        </div>
+        <div class="giveUpArrow">
+          <div class="arrowCorpse"></div>
+          <div class="arrowTip"></div>
+        </div>
       </div>
-      <div class="inputContainer">
-        <span></span>
+      <div class="gameContainer">
+        <div class="canvasContainer"></div>
+        <div class="warningBar">
+          <img src="assets/warningBar.svg">
+        </div>
+        <div class="inputContainer">
+          <span></span>
+        </div>
+      </div>
+      <div class="resultOverlay">
+        <img class="exitCrossButton" src="assets/exitCross.svg">
+        <div class="imageContainer">
+          <img src="assets/gamePics/cri.jpg">
+        </div>
+        <div class="rightContainer">
+          <div class="infosContainer">
+            <p class="imageTitle"></p>
+            <p class="artistName"></p>
+            <p class="description"></p>
+          </div>
+          <div class="buttonContainer">
+          </div>
+        </div>
       </div>
     </div>
   </body>
   <script src="scripts/libraries/paper-full.min.js"></script>
   <script src="scripts/libraries/matter.js"></script>
+  <script src="scripts/libraries/gsap.min.js"></script>
   <script src="scripts/main.js" charset="utf-8"></script>
   <script src="scripts/pixelateImage.js" charset="utf-8"></script>
   <script src="scripts/matterScene.js" charset="utf-8"></script>

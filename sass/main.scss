@@ -1,40 +1,168 @@
 body
 {
-    margin: 0;
+	margin: 0;
 }
 .container
-{   
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    .canvasContainer
-    {
-        display: flex;
-        justify-content: center;
-    }
-    .warningBar
-    {
-        width: 110vw;
-        img
-        {
-            margin: 0 0 0 -15px;
-        }
-    }
-    .inputContainer
-    {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        span
-        {
-            color: white;
-            font-family: 'Raleway', sans-serif;
-            text-transform: uppercase;
-            font-size: 10vh;
-            letter-spacing: 1vw;
-        }
-    }
+{
+	position: relative;
+	.giveUpContainer
+	{
+		position: absolute;
+		height: 170px;
+		top: 45vh;
+		left: 100px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		pointer-events: none;
+		z-index: 5;
+		.giveUpText
+		{
+			font-size: 18px;
+			font-family: 'Open Sans', sans-serif;
+			text-align: center;
+			color: grey;
+			p
+			{
+				margin: 10px;
+			}
+		}
+		.giveUpArrow
+		{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			.arrowCorpse
+			{
+				height: 45px;
+				width: 3px;
+				background-color: grey;
+				border-radius: 3px;
+			}
+			.arrowTip
+			{
+				width: 20px;
+				height: 20px;
+				border-right: solid grey 3px;
+				border-bottom: solid grey 3px;
+				transform: translateY(-25px) rotate(45deg);
+				border-radius: 3px;
+			}
+		}
+	}
+	.gameContainer
+	{   
+		width: 100vw;
+		height: 100vh;
+		background-color: black;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		z-index: 10;
+		.canvasContainer
+		{
+			display: flex;
+			justify-content: center;
+			background-color: rgb(44, 44, 44);
+			canvas
+			{
+				z-index: 11;
+			}
+		}
+		.warningBar
+		{
+			width: 110vw;
+			img
+			{
+				margin: 0 0 0 -15px;
+			}
+		}
+		.inputContainer
+		{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			span
+			{
+				color: white;
+				font-family: 'Raleway', sans-serif;
+				text-transform: uppercase;
+				font-size: 10vh;
+				letter-spacing: 1vw;
+			}
+		}
+	}
+	.resultOverlay
+	{
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		background-color: rgba($color: #000, $alpha: 0.8);
+		z-index: 20;
+		opacity: 0;
+		pointer-events: none;
+		.imageContainer
+		{
+			height: 100vh;
+			width: 47vw;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			img
+			{
+				max-height: 80vh;
+				max-width: 40vw;
+			}
+		}
+		.rightContainer
+		{
+			height: 100vh;
+			width: 53vw;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			color: white;
+			font-family: 'Open Sans';
+			.infosContainer
+			{
+				max-width: 45vw;
+				margin-left: 4vw;
+				p
+				{
+					margin: 0;
+				}
+				.imageTitle
+				{
+					font-size: 75px;
+				}
+				.artistName
+				{
+					font-size: 25px;
+					color: grey;
+					margin-bottom: 7vh;
+				}
+				.description
+				{
+					max-width: 40vw;
+					font-size: 15px;
+				}
+			}
+		}
+		.exitCrossButton
+		{
+			width: 25px;
+			position: absolute;
+			top: 35px;
+			right: 35px;
+			fill: white;
+			&:hover
+			{
+				cursor: pointer;
+			}
+		}
+	}
 }

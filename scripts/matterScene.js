@@ -44,7 +44,7 @@ const engine = Engine.create()
 const world = engine.world
 
 // console.log(engine.positionIterations, engine.velocityIterations)
-engine.positionIterations = 5
+engine.positionIterations = 10
 engine.velocityIterations = 20
 
 // CREATE A RENDERER
@@ -55,6 +55,7 @@ const render = Render.create({
 		width: context.canvasWidth,
 		height: context.canvasHeight,
 		wireframes : false,
+		background : 'transparent'
 	},
 })
 
@@ -64,11 +65,6 @@ context.setResizeUpdate()
 const ground = Bodies.rectangle(context.canvasWidth / 2, context.canvasHeight + 25, context.canvasWidth, 50, { isStatic: true })
 World.add(engine.world, [ground])
 
-// TO MAKE DETERNIMISMM
-// let runner = Matter.Runner.create()
-// runner.isFixed = true
-
-
 // RUN THE ENGIN & RENDERER
 Engine.run(engine)
 Render.run(render)
@@ -76,7 +72,7 @@ Render.run(render)
 const matterSystem =
 {
 	// Scene properties
-	boxeSize : context.boxesSize,
+	boxSize : context.boxesSize,
 	numberOfBox : 50,
 	boxByColumn : 10,
 	boxes : [],
@@ -89,10 +85,19 @@ const matterSystem =
 	cleaningArm : null,
 	isCleaning : false,
 
+	_giveUpCube : null,
+
 	systemPropertiesSetup(numberOfBox, boxByColumn)
 	{
+		this.boxes = []
 		this.numberOfBox = numberOfBox
 		this.boxByColumn = boxByColumn
+
+		this.xStep = 0
+		this.yStep = 0
+		this.boxesDisplayCounter = 0
+
+		gameState.overlayDataActualization()
 	},
 		
 	sceneCreating(colorArray)
@@ -104,10 +109,10 @@ const matterSystem =
 			{
 				this.boxes.push(_tab)
 				_tab = []
-				this.xStep += this.boxeSize
+				this.xStep += this.boxSize
 			}
 			_color = colorArray[this.boxes.length][i - this.boxByColumn * this.boxes.length]
-			_tab.push(Bodies.rectangle(this.xStep + context.canvasWidth - this.numberOfBox / this.boxByColumn * this.boxeSize - this.distanceFromRight, -100, this.boxeSize, this.boxeSize, {
+			_tab.push(Bodies.rectangle(this.xStep + context.canvasWidth - this.numberOfBox / this.boxByColumn * this.boxSize - this.distanceFromRight, -100, this.boxSize, this.boxSize, {
 				render:
 				{
 					fillStyle: `rgb(${_color.r}, ${_color.g}, ${_color.b})`,
@@ -119,6 +124,18 @@ const matterSystem =
 
 		this.setMouseConstraint()
 		this.setCleaningSystem()
+		this.setUpGiveUpSystem()
+
+		// CREATING THE GIVE UP CUBE
+		this._giveUpCube = Bodies.rectangle(215, context.canvasHeight - 20, 40, 40, {
+			isStatic: true,
+			render:
+				{
+					fillStyle: `#FF69B4`,
+					lineWidth: 2
+				}
+		})
+		World.add(engine.world, [this._giveUpCube])
 	},
 	
 	boxesShuffleAndDisplay(boxes)
@@ -178,7 +195,7 @@ const matterSystem =
 	setCleaningSystem()
 	{
 		// CREATING CLEANING ARM BODY
-		this.cleaningArm = Bodies.rectangle(-100, 0, 50, context.canvasHeight, { isStatic: true })
+		this.cleaningArm = Bodies.rectangle(-100, 0, 50, context.canvasHeight, { isStatic: true, render: { fillStyle: '#FFD700'} })
 		World.add(engine.world, [this.cleaningArm])
 
 		// CLEANING CLOCK ANIMATION
@@ -194,6 +211,7 @@ const matterSystem =
 			// RESET CLEANING SYSTEM
 			if (cleaningArmPos > context.canvasWidth + 100) {
 				this.isCleaning = false
+				this.cleaningArm.position.x = -100
 				cleaningArmPos = -100
 				// REMOVING ALL BOXES FROM THE SCENE
 				for (const _array of this.boxes) {
@@ -201,7 +219,30 @@ const matterSystem =
 						World.remove(engine.world, [_element])
 					}
 				}
+				// LAUNCH NEXT IMAGE AFTER CLEANING
+				if (gameState.actualImage == gameState.gameConfig.length - 1) {
+					gameState.actualImage = 0
+				}
+				else
+				{
+					gameState.actualImage++
+				}
+				console.log(gameState.actualImage)
+				pixelateImage(gameState.gameConfig[gameState.actualImage].imageName, gameState.gameConfig[gameState.actualImage].size[0], gameState.gameConfig[gameState.actualImage].size[1])
 			}
 		})
 	},
+
+	setUpGiveUpSystem()
+	{
+		Events.on(engine, 'beforeUpdate', () =>
+		{
+			if (this._giveUpCube.position.y > context.canvasHeight || this._giveUpCube.position.x < - context.canvasWidth * 2 || this._giveUpCube.position.x > context.canvasWidth * 2) {
+				this._giveUpCube.position.y = context.canvasHeight - 50
+				this._giveUpCube.position.x = 215
+				World.remove(engine.world, [this._giveUpCube])
+				gameState.overlayDisplay()
+			}
+		})
+	}
 }

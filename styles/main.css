@@ -2,26 +2,116 @@ body {
   margin: 0; }
 
 .container {
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; }
-  .container .canvasContainer {
+  position: relative; }
+  .container .giveUpContainer {
+    position: absolute;
+    height: 170px;
+    top: 45vh;
+    left: 100px;
     display: flex;
-    justify-content: center; }
-  .container .warningBar {
-    width: 110vw; }
-    .container .warningBar img {
-      margin: 0 0 0 -15px; }
-  .container .inputContainer {
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 5; }
+    .container .giveUpContainer .giveUpText {
+      font-size: 18px;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      color: grey; }
+      .container .giveUpContainer .giveUpText p {
+        margin: 10px; }
+    .container .giveUpContainer .giveUpArrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .container .giveUpContainer .giveUpArrow .arrowCorpse {
+        height: 45px;
+        width: 3px;
+        background-color: grey;
+        border-radius: 3px; }
+      .container .giveUpContainer .giveUpArrow .arrowTip {
+        width: 20px;
+        height: 20px;
+        border-right: solid grey 3px;
+        border-bottom: solid grey 3px;
+        transform: translateY(-25px) rotate(45deg);
+        border-radius: 3px; }
+  .container .gameContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
     display: flex;
-    justify-content: center;
-    align-items: center; }
-    .container .inputContainer span {
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10; }
+    .container .gameContainer .canvasContainer {
+      display: flex;
+      justify-content: center;
+      background-color: #2c2c2c; }
+      .container .gameContainer .canvasContainer canvas {
+        z-index: 11; }
+    .container .gameContainer .warningBar {
+      width: 110vw; }
+      .container .gameContainer .warningBar img {
+        margin: 0 0 0 -15px; }
+    .container .gameContainer .inputContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      .container .gameContainer .inputContainer span {
+        color: white;
+        font-family: 'Raleway', sans-serif;
+        text-transform: uppercase;
+        font-size: 10vh;
+        letter-spacing: 1vw; }
+  .container .resultOverlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none; }
+    .container .resultOverlay .imageContainer {
+      height: 100vh;
+      width: 47vw;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center; }
+      .container .resultOverlay .imageContainer img {
+        max-height: 80vh;
+        max-width: 40vw; }
+    .container .resultOverlay .rightContainer {
+      height: 100vh;
+      width: 53vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
       color: white;
-      font-family: 'Raleway', sans-serif;
-      text-transform: uppercase;
-      font-size: 10vh;
-      letter-spacing: 1vw; }
+      font-family: 'Open Sans'; }
+      .container .resultOverlay .rightContainer .infosContainer {
+        max-width: 45vw;
+        margin-left: 4vw; }
+        .container .resultOverlay .rightContainer .infosContainer p {
+          margin: 0; }
+        .container .resultOverlay .rightContainer .infosContainer .imageTitle {
+          font-size: 75px; }
+        .container .resultOverlay .rightContainer .infosContainer .artistName {
+          font-size: 25px;
+          color: grey;
+          margin-bottom: 7vh; }
+        .container .resultOverlay .rightContainer .infosContainer .description {
+          max-width: 40vw;
+          font-size: 15px; }
+    .container .resultOverlay .exitCrossButton {
+      width: 25px;
+      position: absolute;
+      top: 35px;
+      right: 35px;
+      fill: white; }
+      .container .resultOverlay .exitCrossButton:hover {
+        cursor: pointer; }

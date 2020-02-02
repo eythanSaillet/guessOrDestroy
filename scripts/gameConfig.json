@@ -1,20 +1,26 @@
 [
 	{
 		"name":"La joconde",
-		"imageName":"joconde.jpeg",
+		"imageName":"joconde.jpg",
 		"size":[10, 10],
-		"answers":["joconde", "mona", "lisa"]
+		"answers":["joconde", "mona", "lisa"],
+		"artistName":"Edvard Munch",
+		"description":"Le Cri (en norvégien : Skrik) est une œuvre expressionniste de l'artiste norvégien Edvard Munch dont il existe cinq versions (deux peintures, un pastel, un au crayon et une lithographie) réalisées entre 1893 et 1917. Symbolisant l'homme moderne emporté par une crise d'angoisse existentielle, elle est considérée comme l'œuvre la plus importante de l'artiste. Le paysage en arrière-plan est le fjord d'Oslo, vu d'Ekeberg. L'une des cinq versions a été vendue par Sotheby's à New York pour un montant de 120 millions de dollars. Elle détient ainsi, le 2 mai 2012, le record de vente d'une peinture aux enchères1. Elle est aujourd'hui la cinquième œuvre vendue la plus chère aux enchères."
 	},
 	{
 		"name":"La Liberté guidant le peuple",
 		"imageName":"liberty.jpg",
 		"size":[15, 15],
-		"answers":["liberté", "liberte", "guidant", "peuple"]
+		"answers":["liberté", "liberte", "guidant", "peuple"],
+		"artistName":"Edvard Munch",
+		"description":"Le Cri (en norvégien : Skrik) est une œuvre expressionniste de l'artiste norvégien Edvard Munch dont il existe cinq versions (deux peintures, un pastel, un au crayon et une lithographie) réalisées entre 1893 et 1917. Symbolisant l'homme moderne emporté par une crise d'angoisse existentielle, elle est considérée comme l'œuvre la plus importante de l'artiste. Le paysage en arrière-plan est le fjord d'Oslo, vu d'Ekeberg. L'une des cinq versions a été vendue par Sotheby's à New York pour un montant de 120 millions de dollars. Elle détient ainsi, le 2 mai 2012, le record de vente d'une peinture aux enchères1. Elle est aujourd'hui la cinquième œuvre vendue la plus chère aux enchères."
 	},
 	{
 		"name":"Le Cri",
 		"imageName":"cri.jpg",
 		"size":[10, 10],
-		"answers":["cri"]
+		"answers":["cri"],
+		"artistName":"Edvard Munch",
+		"description":"Le Cri (en norvégien : Skrik) est une œuvre expressionniste de l'artiste norvégien Edvard Munch dont il existe cinq versions (deux peintures, un pastel, un au crayon et une lithographie) réalisées entre 1893 et 1917. Symbolisant l'homme moderne emporté par une crise d'angoisse existentielle, elle est considérée comme l'œuvre la plus importante de l'artiste. Le paysage en arrière-plan est le fjord d'Oslo, vu d'Ekeberg. L'une des cinq versions a été vendue par Sotheby's à New York pour un montant de 120 millions de dollars. Elle détient ainsi, le 2 mai 2012, le record de vente d'une peinture aux enchères1. Elle est aujourd'hui la cinquième œuvre vendue la plus chère aux enchères."
 	}
 ]
