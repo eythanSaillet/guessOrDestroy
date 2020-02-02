@@ -62,7 +62,6 @@ let gameState = {
 
 	exitOverlay()
 	{
-		answerInput.canWrite = true
 		this.$resultOverlay.style.pointerEvents = 'none'
 		gsap.to(this.$resultOverlay, {opacity: 0, duration: 0.5})
 		matterSystem.isCleaning = true
@@ -145,9 +144,9 @@ let answerInput = {
 		this.$textInput.style.color = '#7CFC00'
 		setTimeout(() => {
 			gameState.overlayDisplay()
-			this.activeWreckingBall = false
-			World.remove(engine.world, [matterSystem.wreckingBall])
-			World.remove(engine.world, [matterSystem.wreckingBallConstraint])
+			matterSystem.activeWreckingBall = false
+			// World.remove(engine.world, [matterSystem.wreckingBall])
+			// World.remove(engine.world, [matterSystem.wreckingBallConstraint])
 		}, 1500)
 	},
 

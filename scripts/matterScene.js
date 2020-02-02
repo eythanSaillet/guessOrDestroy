@@ -193,7 +193,7 @@ const matterSystem =
 	setCleaningSystem()
 	{
 		// CREATING CLEANING ARM BODY
-		this.cleaningArm = Bodies.rectangle(-1000, 0, 50, context.canvasHeight, { isStatic: true, render: { fillStyle: '#FFF'} })
+		this.cleaningArm = Bodies.rectangle(-1000, 0, 50, context.canvasHeight + 10, { isStatic: true, render: { fillStyle: '#FFF'} })
 		World.add(engine.world, [this.cleaningArm])
 
 		// CLEANING CLOCK ANIMATION
@@ -204,7 +204,7 @@ const matterSystem =
 			if (this.isCleaning) {
 				Body.setVelocity(this.cleaningArm, { x: 15, y: 0 })
 				Body.setPosition(this.cleaningArm, { x: cleaningArmPos, y: context.canvasHeight / 2})
-				cleaningArmPos += 5
+				cleaningArmPos += 7.5
 			}
 			// RESET CLEANING SYSTEM
 			if (cleaningArmPos > context.canvasWidth + 100) {
@@ -247,7 +247,7 @@ const matterSystem =
 				wreckingBallInitPosX += 1.3 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
 				this.wreckingBallConstraint.pointA.x = wreckingBallInitPosX
 			}
-			if (this.wreckingBallConstraint.pointA.x > context.canvasWidth + 100 && this.wreckingBall.position.x > context.canvasWidth + 110) {
+			if ((this.wreckingBallConstraint.pointA.x > context.canvasWidth + 100 && this.wreckingBall.position.x > context.canvasWidth + 110) || this.activeWreckingBall == false) {
 				this.activeWreckingBall = false
 				this.wreckingBall.position.x = -500
 				this.wreckingBallConstraint.pointA.x = -500
@@ -256,6 +256,7 @@ const matterSystem =
 				World.remove(engine.world, [this.wreckingBallConstraint])
 				gameState.overlayDisplay()
 				engine.events.beforeUpdate.pop()
+				console.log(engine.events)
 			}
 		})
 	},
