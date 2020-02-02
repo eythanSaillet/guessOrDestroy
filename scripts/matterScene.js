@@ -244,9 +244,7 @@ const matterSystem =
 		Events.on(engine, 'beforeUpdate', () =>
 		{
 			if (this.activeWreckingBall == true) {
-				wreckingBallInitPosX += 5 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
-				console.log(wreckingBallInitPosX, 5 *  Math.sin(engine.timing.timestamp * 0.001) + 0.5)
-				console.log(this.activeWreckingBall)
+				wreckingBallInitPosX += 6 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
 				this.wreckingBallConstraint.pointA.x = wreckingBallInitPosX
 			}
 			if (this.wreckingBallConstraint.pointA.x > context.canvasWidth + 100 && this.wreckingBall.position.x > context.canvasWidth + 110) {
@@ -254,10 +252,10 @@ const matterSystem =
 				this.wreckingBall.position.x = -500
 				this.wreckingBallConstraint.pointA.x = -500
 				wreckingBallInitPosX = -500
-				World.remove(engine.world, this.wreckingBall)
-				World.remove(engine.world, this.wreckingBallConstraint)
+				World.remove(engine.world, [this.wreckingBall])
+				World.remove(engine.world, [this.wreckingBallConstraint])
 				gameState.overlayDisplay()
-				console.log('finish')
+				engine.events.beforeUpdate.pop()
 			}
 		})
 	},

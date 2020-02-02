@@ -73,7 +73,6 @@ function unpixelizationSetup(_sizesArray, _imageName)
 		_newSizesArray.push(_sizesArray[Math.floor(_sizesArrayCounter)])
 		_sizesArrayCounter += _sizesArrayStep
 	} while (_sizesArrayCounter < _sizesArray.length)
-	console.log(_newSizesArray)
 
 	let _unpixelizationStates = []
 	for (const _element of _newSizesArray) {
@@ -98,5 +97,4 @@ function unpixelizationSetup(_sizesArray, _imageName)
 		}
 		_unpixelizationStates.push(_colorArray)
 	}
-	console.log(_unpixelizationStates)
 }
