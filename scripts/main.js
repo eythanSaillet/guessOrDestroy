@@ -145,6 +145,7 @@ let answerInput = {
 		this.$textInput.style.color = '#7CFC00'
 		setTimeout(() => {
 			gameState.overlayDisplay()
+			this.activeWreckingBall = false
 			World.remove(engine.world, [matterSystem.wreckingBall])
 			World.remove(engine.world, [matterSystem.wreckingBallConstraint])
 		}, 1500)

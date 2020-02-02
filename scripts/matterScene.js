@@ -234,7 +234,7 @@ const matterSystem =
 	setWreckingBall()
 	{
 		wreckingBallInitPosX = -500
-		this.wreckingBall = Bodies.circle(wreckingBallInitPosX, context.canvasHeight - 300, 100, { density: 0.5, frictionAir: 0.005})
+		this.wreckingBall = Bodies.circle(wreckingBallInitPosX, context.canvasHeight - 300, 80, { density: 0.7, frictionAir: 0.005})
 		World.add(engine.world, this.wreckingBall)
 		this.wreckingBallConstraint = Matter.Constraint.create({
 			pointA: { x: wreckingBallInitPosX , y: -100 },
@@ -244,7 +244,7 @@ const matterSystem =
 		Events.on(engine, 'beforeUpdate', () =>
 		{
 			if (this.activeWreckingBall == true) {
-				wreckingBallInitPosX += 6 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
+				wreckingBallInitPosX += 1.3 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
 				this.wreckingBallConstraint.pointA.x = wreckingBallInitPosX
 			}
 			if (this.wreckingBallConstraint.pointA.x > context.canvasWidth + 100 && this.wreckingBall.position.x > context.canvasWidth + 110) {
