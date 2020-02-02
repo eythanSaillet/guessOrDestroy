@@ -3,39 +3,6 @@ body {
 
 .container {
   position: relative; }
-  .container .giveUpContainer {
-    position: absolute;
-    height: 170px;
-    top: 45vh;
-    left: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    pointer-events: none;
-    z-index: 5; }
-    .container .giveUpContainer .giveUpText {
-      font-size: 18px;
-      font-family: 'Open Sans', sans-serif;
-      text-align: center;
-      color: grey; }
-      .container .giveUpContainer .giveUpText p {
-        margin: 10px; }
-    .container .giveUpContainer .giveUpArrow {
-      display: flex;
-      flex-direction: column;
-      align-items: center; }
-      .container .giveUpContainer .giveUpArrow .arrowCorpse {
-        height: 45px;
-        width: 3px;
-        background-color: grey;
-        border-radius: 3px; }
-      .container .giveUpContainer .giveUpArrow .arrowTip {
-        width: 20px;
-        height: 20px;
-        border-right: solid grey 3px;
-        border-bottom: solid grey 3px;
-        transform: translateY(-25px) rotate(45deg);
-        border-radius: 3px; }
   .container .gameContainer {
     width: 100vw;
     height: 100vh;

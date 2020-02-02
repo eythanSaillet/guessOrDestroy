@@ -85,7 +85,14 @@ const matterSystem =
 	cleaningArm : null,
 	isCleaning : false,
 
-	_giveUpCube : null,
+	wreckingBall : null,
+	wreckingBallConstraint : null,
+	activeWreckingBall : true,
+
+	init()
+	{
+		this.setMouseConstraint()
+	},
 
 	systemPropertiesSetup(numberOfBox, boxByColumn)
 	{
@@ -97,7 +104,10 @@ const matterSystem =
 		this.yStep = 0
 		this.boxesDisplayCounter = 0
 
-		gameState.overlayDataActualization()
+		setTimeout(() =>
+		{
+			gameState.overlayDataActualization()
+		},1000)
 	},
 		
 	sceneCreating(colorArray)
@@ -121,21 +131,6 @@ const matterSystem =
 			}))
 		}
 		this.boxesShuffleAndDisplay(this.boxes)
-
-		this.setMouseConstraint()
-		this.setCleaningSystem()
-		this.setUpGiveUpSystem()
-
-		// CREATING THE GIVE UP CUBE
-		this._giveUpCube = Bodies.rectangle(215, context.canvasHeight - 20, 40, 40, {
-			isStatic: true,
-			render:
-				{
-					fillStyle: `#FF69B4`,
-					lineWidth: 2
-				}
-		})
-		World.add(engine.world, [this._giveUpCube])
 	},
 	
 	boxesShuffleAndDisplay(boxes)
@@ -182,20 +177,23 @@ const matterSystem =
 			let _counter = 0
 			boxesDisplayLoop(boxesColumn)
 		}
+
+		this.setCleaningSystem()
+		this.activeWreckingBall = true
+		this.setWreckingBall()
 	},
 
 	setMouseConstraint()
 	{
 		const mouse = Matter.Mouse.create(render.context.canvas)
-		const options = {mouse}
-		const mConstraint = Matter.MouseConstraint.create(engine, options)
+		const mConstraint = Matter.MouseConstraint.create(engine, {mouse})
 		World.add(world, mConstraint)
 	},
 
 	setCleaningSystem()
 	{
 		// CREATING CLEANING ARM BODY
-		this.cleaningArm = Bodies.rectangle(-100, 0, 50, context.canvasHeight, { isStatic: true, render: { fillStyle: '#FFD700'} })
+		this.cleaningArm = Bodies.rectangle(-1000, 0, 50, context.canvasHeight, { isStatic: true, render: { fillStyle: '#FFF'} })
 		World.add(engine.world, [this.cleaningArm])
 
 		// CLEANING CLOCK ANIMATION
@@ -213,6 +211,7 @@ const matterSystem =
 				this.isCleaning = false
 				this.cleaningArm.position.x = -100
 				cleaningArmPos = -100
+				answerInput.canWrite = true
 				// REMOVING ALL BOXES FROM THE SCENE
 				for (const _array of this.boxes) {
 					for (const _element of _array) {
@@ -227,22 +226,40 @@ const matterSystem =
 				{
 					gameState.actualImage++
 				}
-				console.log(gameState.actualImage)
 				pixelateImage(gameState.gameConfig[gameState.actualImage].imageName, gameState.gameConfig[gameState.actualImage].size[0], gameState.gameConfig[gameState.actualImage].size[1])
 			}
 		})
 	},
 
-	setUpGiveUpSystem()
+	setWreckingBall()
 	{
+		wreckingBallInitPosX = -500
+		this.wreckingBall = Bodies.circle(wreckingBallInitPosX, context.canvasHeight - 300, 100, { density: 0.5, frictionAir: 0.005})
+		World.add(engine.world, this.wreckingBall)
+		this.wreckingBallConstraint = Matter.Constraint.create({
+			pointA: { x: wreckingBallInitPosX , y: -100 },
+			bodyB: this.wreckingBall
+		})
+		World.add(engine.world, this.wreckingBallConstraint)
 		Events.on(engine, 'beforeUpdate', () =>
 		{
-			if (this._giveUpCube.position.y > context.canvasHeight || this._giveUpCube.position.x < - context.canvasWidth * 2 || this._giveUpCube.position.x > context.canvasWidth * 2) {
-				this._giveUpCube.position.y = context.canvasHeight - 50
-				this._giveUpCube.position.x = 215
-				World.remove(engine.world, [this._giveUpCube])
+			if (this.activeWreckingBall == true) {
+				wreckingBallInitPosX += 5 * (Math.sin(engine.timing.timestamp * 0.001) + 0.5)
+				console.log(wreckingBallInitPosX, 5 *  Math.sin(engine.timing.timestamp * 0.001) + 0.5)
+				console.log(this.activeWreckingBall)
+				this.wreckingBallConstraint.pointA.x = wreckingBallInitPosX
+			}
+			if (this.wreckingBallConstraint.pointA.x > context.canvasWidth + 100 && this.wreckingBall.position.x > context.canvasWidth + 110) {
+				this.activeWreckingBall = false
+				this.wreckingBall.position.x = -500
+				this.wreckingBallConstraint.pointA.x = -500
+				wreckingBallInitPosX = -500
+				World.remove(engine.world, this.wreckingBall)
+				World.remove(engine.world, this.wreckingBallConstraint)
 				gameState.overlayDisplay()
+				console.log('finish')
 			}
 		})
-	}
+	},
 }
+matterSystem.init()
