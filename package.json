@@ -7,7 +7,7 @@
     "gitmoji-cli": "^3.1.0"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   },
   "scripts": {
     "sass": "node-sass sass/main.scss styles/main.css -w"
